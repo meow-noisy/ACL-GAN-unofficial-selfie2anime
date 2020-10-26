@@ -1,58 +1,29 @@
-### Paper
+# UNOFFICIAL ACL-GAN repo for selfie2anime (including a pretrained model)
+So far(Oct, 25, 2020), it seems official ACL-GAN's trained models are not available.   
+I want tried selfie2anime models, so I trained them from scratch.  
+Models uploaded at `models/`.
 
-Yihao Zhao, Ruihai Wu, Hao Dong, ["Unpaired Image-to-Image Translation using Adversarial Consistency Loss"](https://arxiv.org/abs/2003.04858 ), ECCV 2020
 
-[arXiv](https://arxiv.org/abs/2003.04858) 
+## Model Training Condition
+My models weren't trained along original way.  
+I used [@xunings's (unofficial) config file](https://github.com/xunings/ACL-GAN/blob/try_20200916/configs/selfie2anime.yaml). thx ;-)
 
-[project page](https://rivendile.github.io/ACL-GAN/)
+Original paper say, models were trained for 350K iter and batch_size is `3`. However, I reduce batch size parameter as below and trained for `350K * 3` iterations, due to my poor GPU resources. Sorry for a little complicated way.
+1. Until 90,000 iter, batch_size is `1` 
+2. Until 570,000 iter, batch_size is `2`
+
+Notice I FORGOT changing `step_size`. So the latter part of train may not work.
+
 
 ### Code usage
-
-For environment: 
-
-`conda env create -f acl-gan.yaml`
-
-For training: 
-
-`python train.py --config configs/male2female.yaml`
-
 For test: 
 
-`python test.py --config configs/male2female.yaml --input inputs/test_male.jpg --checkpoint ./models/test.pth` 
+`$ python test.py --config configs/selfie2anime.yaml --input <YOUR IMAGE_FILE PATH>  --output_folder <YOUR OUTPUT_DIR PATH> --checkpoint ./models/test.pth` 
 
-### Experimental Results
-
-##### Ablation study
-
-<img src="figures/ablation_study.png" alt="ablation_study" style="zoom:50%;" />
-
-##### Male-to-female
-
-<img src="figures/male2female.png" alt="male2female" style="zoom:50%;" />
-
-##### Glasses Removal
-
-<img src="figures/glasses_removal.png" alt="glasses_removal" style="zoom:50%;" />
-
-##### Selfie-to-anime
-
-<img src="figures/selfie2anime.png" alt="selfie2anime" style="zoom:50%;" />
-
-For more results, please refer to our paper.
+e.g. `$ mkdir results; python test.py --config configs/selfie2anime.yaml --input inputs/test_male.jpg --output_folder results --checkpoint ./models/gen_00570000.pt`   
 
 
-### Citation
-
-If you find this code useful for your research, please cite our paper:
-
-```
-@inproceedings{zhao2020aclgan,
-  title={Unpaired Image-to-Image Translation using Adversarial Consistency Loss},
-  author={Zhao, Yihao and Wu, Ruihai and Dong, Hao},
-  booktitle={ECCV},
-  year={2020}
-}
-```
-
+# link
+- [original repo](https://github.com/hyperplane-lab/ACL-GAN)
 
 
